@@ -20,14 +20,31 @@ class BikeMap extends Component {
   onEachLane = (lane, layer) => {
     
     if (lane.properties.cycleway != null) {
-      console.log('lane is a cycleway');
-      layer.bindPopup("cycleway");
+      
+      layer.options.color = "blue";
+      layer.bindPopup(JSON.stringify(lane.properties));
+    
     } else if (lane.properties["cycleway:left"] != null) {
-      layer.bindPopup("cycleway:left");
+
+      layer.options.color = "blue";
+      layer.options.dashArray = "5,10";
+      
+      layer.bindPopup(JSON.stringify(lane.properties));
     } else if (lane.properties["cycleway:right"] != null) {
-      layer.bindPopup("cycleway:right");
+
+      layer.bindPopup(JSON.stringify(lane.properties));
+      layer.options.color = "blue";
+      layer.options.dashArray = "5,10";
+      
     } else if (lane.properties.highway === "cycleway") {
-      layer.bindPopup("highway = cycleway");
+      
+      layer.bindPopup(JSON.stringify(lane.properties));
+      layer.options.color = "blue";
+    
+    } else if (lane.properties.bicycle === "designated") {
+      layer.bindPopup(JSON.stringify(lane.properties));
+      layer.options.color = "blue";
+      layer.options.dashArray = "5,5";
     }
     
   };
@@ -37,7 +54,7 @@ class BikeMap extends Component {
         <div>
             <h1>hi</h1>
             <MapContainer style={{height: '80vh'}} zoom={10} center={[30.3, -81.6]}>
-              <GeoJSON style={this.bikeLaneStyle} data={bikeData.features} onEachFeature={this.onEachLane}/>
+              <GeoJSON data={bikeData.features} onEachFeature={this.onEachLane}/>
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
