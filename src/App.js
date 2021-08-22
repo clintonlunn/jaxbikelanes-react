@@ -1,9 +1,16 @@
-import BikeMap from './components/BikeMap.jsx';
+import React from 'react';
+import './App.css';
+// import Map from './components/Map';
+import BikeMap from './components/BikeMap';
+import Legend from './components/Legend';
 
-function App() {
+const App = () => {
   return (
-    <BikeMap />
+    <div className = 'container'>
+      <BikeMap />
+      <Legend />
+    </div>
   );
-}
+};
 
 export default App;

@@ -1,97 +1,147 @@
-import React, { Component } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
-import bikeData from '../data/jaxbikelanes-lines.json';
-import "leaflet/dist/leaflet.css";
-import "./BikeMap.css";
+import 'leaflet/dist/leaflet.css';
+import React,{useState} from 'react';
+import { MapContainer, TileLayer, GeoJSON} from 'react-leaflet';
+import {features} from '../data/jaxbikelanes-lines.json';
+import './BikeMap.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
-console.log(bikeData);
 
-class BikeMap extends Component {
-    state = {};
+const Map = ()=>{
+    const [onselect, setOnselect] = useState({});
+    const cyclewayObj = {};
+    /* function determining what should happen onmouseover, this function updates our state*/
+    const highlightFeature = (e=> {
+        console.log("highlightFeature triggered");
+        var layer = e.target;
+        const { name, cyclewayleft, cyclewayright, cycleway, highway, maxspeed } = e.target.feature.properties;
+        cyclewayObj.cyclewayleft = cyclewayleft;
+        cyclewayObj.cyclewayright = cyclewayright;
+        cyclewayObj.cycleway = cycleway;
+        cyclewayObj.highway = highway;
 
-    onEachLane = (lane, layer) => {
-    
-      if (lane.properties.cycleway != null) {
-        layer.setStyle({
-          color: "blue"
-        })
-        
-        layer.bindPopup(JSON.stringify(lane.properties));
-      } else if (lane.properties["cycleway:left"] != null) {
-        layer.setStyle({
-          color: "blue",
-          dashArray: "5,10"
+        setOnselect({
+            name:name,
+            cyclewayleft: cyclewayleft,
+            cyclewayright: cyclewayright,
+            cycleway:cycleway,
+            highway:highway,
+            maxspeed: maxspeed
         });
-        
-        layer.bindPopup(JSON.stringify(lane.properties));
-      } else if (lane.properties["cycleway:right"] != null) {
         layer.setStyle({
-          color: "blue",
-          dashArray: "5,10"
+            weight: 1,
+            color: "black",
+            fillOpacity: 1
         });
-  
-        layer.bindPopup(JSON.stringify(lane.properties));
-      } else if (lane.properties.highway === "cycleway") {
-        layer.setStyle({
-          color: "blue",
+    });
+    /*resets our state i.e no properties should be displayed when a feature is not clicked or hovered over */
+    const resetHighlight= (e =>{
+        setOnselect({});
+        e.target.setStyle(style(e.target.feature));
+    })
+    /* this function is called when a feature in the map is hovered over or when a mouse moves out of it, the function calls two functions
+     highlightFeature and resetHighlight*/
+    const onEachFeature= (feature, layer)=> {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
         });
-  
-        layer.bindPopup(JSON.stringify(lane.properties));
-      } else if (lane.properties.bicycle === "designated") {
-        layer.setStyle({
-          color: "blue",
-          dashArray: "5,5"
+    }
+
+    const mapBikeLaneColorToClassification = (cyclewayClassObject) => {
+
+        if (cyclewayClassObject.cyclewayleft !== null) {
+            return "#7fb6ef";
+        } else if (cyclewayClassObject.cyclewayright !== null) {
+            return "#7fb6ef";
+        } else if (cyclewayClassObject.cycleway !== null) {
+            return "#1e7cdc";
+        } else if (cyclewayClassObject.highway !== null) {
+            return "#0861bd";
+        } else {
+            return "green"
+        }
+
+        return "#de2d26";
+    }
+    const mapPolygonColorToDensity=(density => {
+        return density > 3023
+            ? '#a50f15'
+            : density > 676
+            ? '#de2d26'
+            : density > 428
+            ? '#fb6a4a'
+            : density > 236
+            ? '#fc9272'
+            : density > 23
+            ? '#fcbba1'
+            : '#fee5d9';
+    })
+
+    const mapLane = null;
+    const style = (feature => {
+        const cyclewayClassObject = {};
+        cyclewayClassObject.cyclewayleft = feature.properties.cyclewayleft;
+        cyclewayClassObject.cyclewayright = feature.properties.cyclewayright;
+        cyclewayClassObject.cycleway = feature.properties.cycleway;
+        cyclewayClassObject.highway = feature.properties.highway;
+        return ({
+            // fillColor: mapPolygonColorToDensity(feature.properties.Desnity),
+            weight: 3,
+            opacity: 1,
+            // color: 'blue',
+            color: mapBikeLaneColorToClassification(cyclewayClassObject),
+            dashArray: '2',
+            fillOpacity: 0.5
         });
-        layer.bindPopup(JSON.stringify(lane.properties));
-  
-      }
-      
-    };
-
-  componentDidMount() {
-      console.log(bikeData);
-  }
-
-  bikeLaneStyle = {
-    color: "red"
-  }
-
-  // laneTypeLookup = (lane, layer) => {
-
-    // lookup tables to return case type to feed into setStyle function
-    // take in lane and output lane type
-    // maybe match to lane designation
-  // }
-
-  // function setLaneStyle(lane, layer, case) {
-  //   console.log(case);
-  //   // take in case and output style
-  // }
-    
-};
-
-
-
-
-
-  // populatePopup = (lane, layer) => {
-
-  // }
-
-  render() {
-    return (
-        <div>
-            <h1>hi</h1>
-            <MapContainer style={{height: '80vh'}} zoom={10} center={[30.3, -81.6]}>
-              <GeoJSON data={bikeData.features} onEachFeature={this.onEachLane}/>
-              <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-            </MapContainer>
+    });
+    const mapStyle = {
+        height: '55vh',
+        width: '85%',
+        margin: '0 auto',
+    }
+      const feature = features.map(feature=>{
+        return(feature);
+    });
+    return(
+         <div className='container'>
+            <div className="header">
+            <h2 className='heading'>Jacksonville Bike Lanes</h2>
+            <p className="text-muted">Jacksonville Bike lanes by classification</p></div>
+            <div className="">
+                <div className="">
+                {!onselect.county && (
+                <div className="census-info-hover">
+                    <strong>Kenya population density</strong>
+                    <p>Hover on each county for more details</p>
+                </div>
+                )}
+                {onselect.county && (
+                    <ul className="census-info">
+                       {/* <li><strong>{onselect.county}</strong></li><br/> */}
+                        <li>Street Name:{onselect.name}</li>
+                        <li>Cycleway:{onselect.cycleway}</li>
+                        <li>Highway:{onselect.highway}</li>
+                        <li>Maxspeed:{onselect.maxspeed}</li>
+                    </ul>
+                )}
+                <MapContainer zoom={10}
+                 scrollWheelZoom={true} 
+                  style={mapStyle} 
+                   center={[30.3, -81.6]}>
+                    <TileLayer
+                        attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
+                        url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+                    />
+                   {feature && (
+                    <GeoJSON data={feature} 
+                    style={style} 
+                    onEachFeature={onEachFeature}/>
+                    )}
+                </MapContainer>
+                </div>
+            </div>
         </div>
-      );
-  }
-}
 
-export default BikeMap;
+    )
+}
+export default Map;
