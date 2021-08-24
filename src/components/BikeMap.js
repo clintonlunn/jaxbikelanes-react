@@ -50,34 +50,21 @@ const Map = ()=>{
     const mapBikeLaneColorToClassification = (cyclewayClassObject) => {
 
         if (cyclewayClassObject.cyclewayleft !== null) {
-            return "#7fb6ef";
+            // return "#7fb6ef";
+            return "#1e7cdc";
         } else if (cyclewayClassObject.cyclewayright !== null) {
-            return "#7fb6ef";
+            // return "#7fb6ef";
+            return "#1e7cdc";
         } else if (cyclewayClassObject.cycleway !== null) {
             return "#1e7cdc";
         } else if (cyclewayClassObject.highway !== null) {
-            return "#0861bd";
+            // return "#0861bd";
+            return "#1e7cdc";
         } else {
             return "green"
         }
-
-        return "#de2d26";
     }
-    const mapPolygonColorToDensity=(density => {
-        return density > 3023
-            ? '#a50f15'
-            : density > 676
-            ? '#de2d26'
-            : density > 428
-            ? '#fb6a4a'
-            : density > 236
-            ? '#fc9272'
-            : density > 23
-            ? '#fcbba1'
-            : '#fee5d9';
-    })
 
-    const mapLane = null;
     const style = (feature => {
         const cyclewayClassObject = {};
         cyclewayClassObject.cyclewayleft = feature.properties.cyclewayleft;
@@ -109,13 +96,13 @@ const Map = ()=>{
             <p className="text-muted">Jacksonville Bike lanes by classification</p></div>
             <div className="">
                 <div className="">
-                {!onselect.county && (
+                {!onselect.name && (
                 <div className="census-info-hover">
-                    <strong>Kenya population density</strong>
-                    <p>Hover on each county for more details</p>
+                    <strong>Jacksonville Bike Lanes</strong>
+                    <p>Hover on each line for more details</p>
                 </div>
                 )}
-                {onselect.county && (
+                {onselect.name && (
                     <ul className="census-info">
                        {/* <li><strong>{onselect.county}</strong></li><br/> */}
                         <li>Street Name:{onselect.name}</li>
