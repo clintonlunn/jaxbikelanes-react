@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div className = 'container'>
       <BikeMap />
-      <Legend />
+      {/* <Legend /> */}
     </div>
   );
 };
