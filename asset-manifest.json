@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/jaxbikelanes-react/static/css/main.0f7d15f6.chunk.css",
-    "main.js": "/jaxbikelanes-react/static/js/main.de409273.chunk.js",
-    "main.js.map": "/jaxbikelanes-react/static/js/main.de409273.chunk.js.map",
+    "main.css": "/jaxbikelanes-react/static/css/main.cf777460.chunk.css",
+    "main.js": "/jaxbikelanes-react/static/js/main.c92f7785.chunk.js",
+    "main.js.map": "/jaxbikelanes-react/static/js/main.c92f7785.chunk.js.map",
     "runtime-main.js": "/jaxbikelanes-react/static/js/runtime-main.44b6cff3.js",
     "runtime-main.js.map": "/jaxbikelanes-react/static/js/runtime-main.44b6cff3.js.map",
     "static/css/2.da98c186.chunk.css": "/jaxbikelanes-react/static/css/2.da98c186.chunk.css",
@@ -12,14 +12,14 @@
     "static/js/3.0f29d495.chunk.js.map": "/jaxbikelanes-react/static/js/3.0f29d495.chunk.js.map",
     "index.html": "/jaxbikelanes-react/index.html",
     "static/css/2.da98c186.chunk.css.map": "/jaxbikelanes-react/static/css/2.da98c186.chunk.css.map",
-    "static/css/main.0f7d15f6.chunk.css.map": "/jaxbikelanes-react/static/css/main.0f7d15f6.chunk.css.map",
+    "static/css/main.cf777460.chunk.css.map": "/jaxbikelanes-react/static/css/main.cf777460.chunk.css.map",
     "static/js/2.e151b7b2.chunk.js.LICENSE.txt": "/jaxbikelanes-react/static/js/2.e151b7b2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.44b6cff3.js",
     "static/css/2.da98c186.chunk.css",
     "static/js/2.e151b7b2.chunk.js",
-    "static/css/main.0f7d15f6.chunk.css",
-    "static/js/main.de409273.chunk.js"
+    "static/css/main.cf777460.chunk.css",
+    "static/js/main.c92f7785.chunk.js"
   ]
 }
