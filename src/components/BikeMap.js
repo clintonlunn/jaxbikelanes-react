@@ -11,7 +11,6 @@ const Map = ()=>{
     const cyclewayObj = {};
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e=> {
-        console.log("highlightFeature triggered");
         var layer = e.target;
         const { name, cyclewayleft, cyclewayright, cycleway, highway, maxspeed } = e.target.feature.properties;
         cyclewayObj.cyclewayleft = cyclewayleft;
@@ -28,7 +27,7 @@ const Map = ()=>{
             maxspeed: maxspeed
         });
         layer.setStyle({
-            weight: 1,
+            weight: 10,
             color: "black",
             fillOpacity: 1
         });
@@ -42,8 +41,9 @@ const Map = ()=>{
      highlightFeature and resetHighlight*/
     const onEachFeature= (feature, layer)=> {
         layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
+            // mouseover: highlightFeature,
+            // mouseout: resetHighlight,
+            click: highlightFeature
         });
     }
 
@@ -73,7 +73,7 @@ const Map = ()=>{
         cyclewayClassObject.highway = feature.properties.highway;
         return ({
             // fillColor: mapPolygonColorToDensity(feature.properties.Desnity),
-            weight: 3,
+            weight: 10,
             opacity: 1,
             // color: 'blue',
             color: mapBikeLaneColorToClassification(cyclewayClassObject),
@@ -82,8 +82,8 @@ const Map = ()=>{
         });
     });
     const mapStyle = {
-        height: '55vh',
-        width: '85%',
+        height: '100vh',
+        width: '100%',
         margin: '0 auto',
     }
       const feature = features.map(feature=>{
@@ -93,7 +93,8 @@ const Map = ()=>{
          <div className='container'>
             <div className="header">
             <h2 className='heading'>Jacksonville Bike Lanes</h2>
-            <p className="text-muted">Jacksonville Bike lanes by classification</p></div>
+            {/* <p className="text-muted">Jacksonville Bike lanes by classification</p> */}
+            </div>
             <div className="">
                 <div className="">
                 {!onselect.name && (
