@@ -116,8 +116,8 @@ const Map = ()=>{
                   style={mapStyle} 
                    center={[30.3, -81.6]}>
                     <TileLayer
-                        attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
-                        url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                    {feature && (
                     <GeoJSON data={feature} 
