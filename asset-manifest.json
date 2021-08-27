@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/jaxbikelanes-react/static/css/main.cf777460.chunk.css",
-    "main.js": "/jaxbikelanes-react/static/js/main.c92f7785.chunk.js",
-    "main.js.map": "/jaxbikelanes-react/static/js/main.c92f7785.chunk.js.map",
+    "main.js": "/jaxbikelanes-react/static/js/main.31fa83b8.chunk.js",
+    "main.js.map": "/jaxbikelanes-react/static/js/main.31fa83b8.chunk.js.map",
     "runtime-main.js": "/jaxbikelanes-react/static/js/runtime-main.44b6cff3.js",
     "runtime-main.js.map": "/jaxbikelanes-react/static/js/runtime-main.44b6cff3.js.map",
     "static/css/2.da98c186.chunk.css": "/jaxbikelanes-react/static/css/2.da98c186.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.da98c186.chunk.css",
     "static/js/2.e151b7b2.chunk.js",
     "static/css/main.cf777460.chunk.css",
-    "static/js/main.c92f7785.chunk.js"
+    "static/js/main.31fa83b8.chunk.js"
   ]
 }
