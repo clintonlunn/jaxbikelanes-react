@@ -6,7 +6,6 @@ const mapStyle = {
 }
 
 const setLaneStyle = (cyclewayClassObject) => {
-    console.log(cyclewayClassObject);
 
     // dedicated lane
     if (cyclewayClassObject.highway == 'cycleway') {
@@ -14,7 +13,6 @@ const setLaneStyle = (cyclewayClassObject) => {
             weight: 3,
             opacity: 1,
             color: "#0000ce",
-            dashArray: "25,25",
             fillOpacity: 0.5
         }
     } else if (cyclewayClassObject.cyclewayright == 'lane' || (cyclewayClassObject.cyclewayleft == 'lane')) {
@@ -30,6 +28,14 @@ const setLaneStyle = (cyclewayClassObject) => {
             weight: 3,
             opacity: 1,
             color: "#0000ce",
+            // dashArray: "10,15",
+            fillOpacity: 0.5
+        }
+    } else if (cyclewayClassObject.cycleway == 'shared_lane') {
+        return {            
+            weight: 3,
+            opacity: 1,
+            color: "red",
             // dashArray: "10,15",
             fillOpacity: 0.5
         }
