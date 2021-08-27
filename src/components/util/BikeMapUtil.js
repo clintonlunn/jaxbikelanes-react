@@ -1,3 +1,4 @@
+// general map styling
 const mapStyle = {
     height: '100vh',
     width: '100%',
@@ -5,19 +6,18 @@ const mapStyle = {
 }
 
 const setLaneStyle = (cyclewayClassObject) => {
+    console.log(cyclewayClassObject);
 
     // dedicated lane
-    if (cyclewayClassObject.highway !== null) {
-        if (cyclewayClassObject.highway === 'cycleway') {
-            return {            
-                weight: 3,
-                opacity: 1,
-                color: "#0000ce",
-                dashArray: "25,25",
-                fillOpacity: 0.5
-            }
-        }        
-    } else if (cyclewayClassObject.cyclewayright === 'lane' || cyclewayClassObject.cyclewayleft === 'lane') {
+    if (cyclewayClassObject.highway == 'cycleway') {
+        return {            
+            weight: 3,
+            opacity: 1,
+            color: "#0000ce",
+            dashArray: "25,25",
+            fillOpacity: 0.5
+        }
+    } else if (cyclewayClassObject.cyclewayright == 'lane' || (cyclewayClassObject.cyclewayleft == 'lane')) {
         return {            
             weight: 3,
             opacity: 1,
@@ -25,7 +25,7 @@ const setLaneStyle = (cyclewayClassObject) => {
             dashArray: "10,15",
             fillOpacity: 0.5
         }
-    } else if (cyclewayClassObject.cycleway === 'lane') {
+    } else if (cyclewayClassObject.cycleway == 'lane') {
         return {            
             weight: 3,
             opacity: 1,

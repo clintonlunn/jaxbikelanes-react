@@ -7,17 +7,23 @@ import { mapStyle, createStyle, setLaneStyle } from './util/BikeMapUtil'
 import overpassQuery from './query/overpassQuery';
 
 
+
+
 const Map = ()=>{
     const [onselect, setOnselect] = useState({});
-    const cyclewayObj = {};
+    let cyclewayObj = {};
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e=> {
         var layer = e.target;
         const { name, cyclewayleft, cyclewayright, cycleway, highway, maxspeed } = e.target.feature.properties;
-        cyclewayObj.cyclewayleft = cyclewayleft;
-        cyclewayObj.cyclewayright = cyclewayright;
-        cyclewayObj.cycleway = cycleway;
-        cyclewayObj.highway = highway;
+
+        cyclewayObj = {
+            cyclewayleft: cyclewayleft,
+            cyclewayright: cyclewayright,
+            cycleway: cycleway,
+            highway: highway,
+    
+        }
 
         setOnselect({
             name:name,
