@@ -2,9 +2,11 @@ import 'leaflet/dist/leaflet.css';
 import React,{useState} from 'react';
 import { withLeaflet, MapContainer, TileLayer, GeoJSON} from 'react-leaflet';
 import {features} from '../data/jaxbikelanes-lines.json';
+// import {bikeParking} from '../data/bikeparking.json';
+
 import './BikeMap.css';
 import { mapStyle, createStyle, setLaneStyle } from './util/BikeMapUtil'
-import overpassQuery from './query/overpassQuery';
+// import overpassQuery from './query/overpassQuery';
 
 
 
@@ -15,13 +17,14 @@ const Map = ()=>{
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e=> {
         var layer = e.target;
-        const { name, cyclewayleft, cyclewayright, cycleway, highway, maxspeed } = e.target.feature.properties;
+        const { name, cyclewayleft, cyclewayright, cycleway, highway, maxspeed, amenity } = e.target.feature.properties;
 
         cyclewayObj = {
             cyclewayleft: cyclewayleft,
             cyclewayright: cyclewayright,
             cycleway: cycleway,
             highway: highway,
+            amenity: amenity
     
         }
 
@@ -30,6 +33,7 @@ const Map = ()=>{
             cyclewayleft: cyclewayleft,
             cyclewayright: cyclewayright,
             cycleway:cycleway,
+            amenity: amenity,
             highway:highway,
             maxspeed: maxspeed
         });
@@ -56,16 +60,20 @@ const Map = ()=>{
 
 
 
-    const feature = features.map(feature=>{
+    const feature = features.map(feature => {
         return(feature);
     });
+
+    // const bikeParkingAm = bikeParking.map(parkingSpot => {
+    //     return parkingSpot;
+    // })
 
 
     return(
          <div className='container'>
             <div className="header">
             <h2 className='heading'>Jacksonville Bike Lanes</h2>
-            {/* <p className="text-muted">Jacksonville Bike lanes by classification</p> */}
+            <p className="text-muted">Jacksonville Bike lanes by classification</p>
             </div>
             <div className="">
                 <div className="">
@@ -83,6 +91,7 @@ const Map = ()=>{
                         <li>CyclewayLeft:{onselect.cyclewayleft}</li>
                         <li>CyclewayRight:{onselect.cyclewayright}</li>
                         <li>HighwayCycleway:{onselect.highway}</li>
+                        <li>Bike Parking:{onselect.amenity}</li>
                         <li>Maxspeed:{onselect.maxspeed}</li>
                     </ul>
                 )}
@@ -100,6 +109,12 @@ const Map = ()=>{
                     style={createStyle} 
                     onEachFeature={onEachFeature}/>
                     )}
+
+                    {/* {bikeParkingAm && (
+                    <GeoJSON data={bikeParkingAm}
+                    // <GeoJSON data={overPassResults} 
+                    />
+                    )} */}
                 </MapContainer>
                 </div>
             </div>

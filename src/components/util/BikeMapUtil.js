@@ -7,6 +7,7 @@ const mapStyle = {
 
 const setLaneStyle = (cyclewayClassObject) => {
 
+    // console.log(cyclewayClassObject);
     // dedicated lane
     if (cyclewayClassObject.highway === 'cycleway') {
         return {            
@@ -21,6 +22,14 @@ const setLaneStyle = (cyclewayClassObject) => {
             opacity: 1,
             color: "#0000ce",
             dashArray: "10,15",
+            fillOpacity: 0.5
+        }
+    } else if (cyclewayClassObject.amenity === 'bicycle_parking') {
+        console.log("yello");
+        return {            
+            weight: 3,
+            opacity: 1,
+            color: "purple",
             fillOpacity: 0.5
         }
     } else if (cyclewayClassObject.cycleway === 'lane') {
