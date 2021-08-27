@@ -1,9 +1,10 @@
 import 'leaflet/dist/leaflet.css';
 import React,{useState} from 'react';
-import { MapContainer, TileLayer, GeoJSON} from 'react-leaflet';
+import { withLeaflet, MapContainer, TileLayer, GeoJSON} from 'react-leaflet';
 import {features} from '../data/jaxbikelanes-lines.json';
 import './BikeMap.css';
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import { mapStyle, createStyle, setLaneStyle } from './util/BikeMapUtil'
+import overpassQuery from './query/overpassQuery';
 
 
 const Map = ()=>{
@@ -35,7 +36,7 @@ const Map = ()=>{
     /*resets our state i.e no properties should be displayed when a feature is not clicked or hovered over */
     const resetHighlight= (e =>{
         setOnselect({});
-        e.target.setStyle(style(e.target.feature));
+        e.target.setStyle(createStyle(e.target.feature));
     })
     /* this function is called when a feature in the map is hovered over or when a mouse moves out of it, the function calls two functions
      highlightFeature and resetHighlight*/
@@ -47,48 +48,13 @@ const Map = ()=>{
         });
     }
 
-    const mapBikeLaneColorToClassification = (cyclewayClassObject) => {
 
-        if (cyclewayClassObject.cyclewayleft !== null) {
-            // return "#7fb6ef";
-            return "#1e7cdc";
-        } else if (cyclewayClassObject.cyclewayright !== null) {
-            // return "#7fb6ef";
-            return "#1e7cdc";
-        } else if (cyclewayClassObject.cycleway !== null) {
-            return "#1e7cdc";
-        } else if (cyclewayClassObject.highway !== null) {
-            // return "#0861bd";
-            return "#1e7cdc";
-        } else {
-            return "green"
-        }
-    }
 
-    const style = (feature => {
-        const cyclewayClassObject = {};
-        cyclewayClassObject.cyclewayleft = feature.properties.cyclewayleft;
-        cyclewayClassObject.cyclewayright = feature.properties.cyclewayright;
-        cyclewayClassObject.cycleway = feature.properties.cycleway;
-        cyclewayClassObject.highway = feature.properties.highway;
-        return ({
-            // fillColor: mapPolygonColorToDensity(feature.properties.Desnity),
-            weight: 10,
-            opacity: 1,
-            // color: 'blue',
-            color: mapBikeLaneColorToClassification(cyclewayClassObject),
-            dashArray: '2',
-            fillOpacity: 0.5
-        });
-    });
-    const mapStyle = {
-        height: '100vh',
-        width: '100%',
-        margin: '0 auto',
-    }
-      const feature = features.map(feature=>{
+    const feature = features.map(feature=>{
         return(feature);
     });
+
+
     return(
          <div className='container'>
             <div className="header">
@@ -108,11 +74,13 @@ const Map = ()=>{
                        {/* <li><strong>{onselect.county}</strong></li><br/> */}
                         <li>Street Name:{onselect.name}</li>
                         <li>Cycleway:{onselect.cycleway}</li>
-                        <li>Highway:{onselect.highway}</li>
+                        <li>CyclewayLeft:{onselect.cyclewayleft}</li>
+                        <li>CyclewayRight:{onselect.cyclewayright}</li>
+                        <li>HighwayCycleway:{onselect.highway}</li>
                         <li>Maxspeed:{onselect.maxspeed}</li>
                     </ul>
                 )}
-                <MapContainer zoom={10}
+                <MapContainer zoom={12}
                  scrollWheelZoom={true} 
                   style={mapStyle} 
                    center={[30.3, -81.6]}>
@@ -121,8 +89,9 @@ const Map = ()=>{
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                    {feature && (
-                    <GeoJSON data={feature} 
-                    style={style} 
+                    <GeoJSON data={feature}
+                    // <GeoJSON data={overPassResults} 
+                    style={createStyle} 
                     onEachFeature={onEachFeature}/>
                     )}
                 </MapContainer>
