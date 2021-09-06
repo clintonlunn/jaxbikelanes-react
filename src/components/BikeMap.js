@@ -11,12 +11,14 @@ import { mapStyle, createStyle, setLaneStyle } from './util/BikeMapUtil'
 
 
 
-const Map = ()=>{
+const Map = ()=> {
+    let activeSegment;
     const [onselect, setOnselect] = useState({});
+    // const [activeSegment, setActiveSegment] = useState();
     let cyclewayObj = {};
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e=> {
-        var layer = e.target;
+        let layer = e.target;
         const { name, cyclewayleft, cyclewayright, cycleway, highway, maxspeed, amenity } = e.target.feature.properties;
 
         cyclewayObj = {
@@ -42,21 +44,38 @@ const Map = ()=>{
             color: "black",
             fillOpacity: 1
         });
+
+        activeSegment = layer;
+
     });
     /*resets our state i.e no properties should be displayed when a feature is not clicked or hovered over */
-    const resetHighlight= (e =>{
+    const resetHighlight = (e =>{
         setOnselect({});
-        e.target.setStyle(createStyle(e.target.feature));
+        e.setStyle(createStyle(e.feature));
     })
+
+    const handleClick = (e => {
+        if (activeSegment) {
+            // reset previous activeSegment style
+            resetHighlight(activeSegment)
+            highlightFeature(e);
+        } else {
+            
+            highlightFeature(e);
+        }
+    })
+
     /* this function is called when a feature in the map is hovered over or when a mouse moves out of it, the function calls two functions
      highlightFeature and resetHighlight*/
     const onEachFeature= (feature, layer)=> {
         layer.on({
             // mouseover: highlightFeature,
             // mouseout: resetHighlight,
-            click: highlightFeature
+            // click: highlightFeature,
+            click: handleClick,
         });
     }
+
 
 
 
@@ -71,10 +90,10 @@ const Map = ()=>{
 
     return(
          <div className='container'>
-            <div className="header">
+            {/* <div className="header">
             <h2 className='heading'>Jacksonville Bike Lanes</h2>
             <p className="text-muted">Jacksonville Bike lanes by classification</p>
-            </div>
+            </div> */}
             <div className="">
                 <div className="">
                 {!onselect.name && (

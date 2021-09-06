@@ -60,12 +60,14 @@ const setLaneStyle = (cyclewayClassObject) => {
 }
 
 const createStyle = (feature => {
-    const cyclewayClassObject = {};
-    cyclewayClassObject.cyclewayleft = feature.properties.cyclewayleft;
-    cyclewayClassObject.cyclewayright = feature.properties.cyclewayright;
-    cyclewayClassObject.cycleway = feature.properties.cycleway;
-    cyclewayClassObject.highway = feature.properties.highway;
+    if (feature !== undefined) {
+        const cyclewayClassObject = {};
+        cyclewayClassObject.cyclewayleft = feature.properties.cyclewayleft;
+        cyclewayClassObject.cyclewayright = feature.properties.cyclewayright;
+        cyclewayClassObject.cycleway = feature.properties.cycleway;
+        cyclewayClassObject.highway = feature.properties.highway;
     return (setLaneStyle(cyclewayClassObject));
+    }
 });
 
 
